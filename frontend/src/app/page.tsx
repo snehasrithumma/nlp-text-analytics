@@ -1,9 +1,10 @@
 "use client"
 import { useState } from "react"
+import { NLPResult } from "@/interfaces/nlpresult "
 
 export default function Home() {
   const [text, setText] = useState("")
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState<NLPResult | null>(null);
 
   const analyze = async () => {
     const formData = new FormData()
