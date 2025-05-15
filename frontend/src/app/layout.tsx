@@ -29,6 +29,9 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <footer className="text-center text-sm mt-10 text-gray-400">
+        Built with ❤️ by Snehasri Thumma – <a href="https://github.com/snehasrithumma/nlp-text-analytics" className="underline">GitHub</a>
+      </footer>
     </html>
   );
 }
