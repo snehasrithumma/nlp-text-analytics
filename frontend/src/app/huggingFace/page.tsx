@@ -1,0 +1,52 @@
+"use client"
+import { useState } from "react"
+import { HuggingFaceNLPResult } from "@/interfaces/nlpresult ";
+
+
+
+export default function HuggingFace() {
+    const [text, setText] = useState("")
+    const [result, setResult] = useState<HuggingFaceNLPResult | null>(null);
+
+  const analyze = async () => {
+    const formData = new FormData()
+    formData.append("text", text)
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analyze`, {
+      method: "POST",
+      body: formData,
+    })
+
+    const data = await res.json()
+    setResult(data)
+  }
+    return (
+        <main className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Text Analyzer</h1>
+        <textarea
+          className="w-full p-2 border rounded mb-4"
+          rows={6}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Paste your text here..."
+        />
+        <button onClick={analyze} className="bg-blue-600 text-white px-4 py-2 rounded">
+          Analyze
+        </button>
+        {result && (
+          <div className="mt-4">
+            <h2 className="font-semibold">Summary:</h2>
+            <p>{result.summary}</p>
+            <h2 className="font-semibold mt-2">Sentiment:</h2>
+                    <p> {result.sentiment['label'] + ' - ' + result.sentiment['score']+ ' - ' + result.sentiment['label']}</p>
+            <h2 className="font-semibold mt-2">Keywords:</h2>
+            <ul>
+              {result.entities.map(({ entity, score, word }, i: number) => (
+                <li key={i}>• {word +' - '+ entity+' - '+ score}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </main>
+    )
+}

@@ -66,7 +66,11 @@ __pycache__/
 /backend/.env*
 
 # Logs
-/backend/*.log
+/backend/logs
 
 # Misc
 /backend/.DS_Store
+
+# model checkpoints
+/backend/huggingface_models/ner_model/checkpoint-*/
+/backend/huggingface_models/yelp_review_classifier/checkpoint-*/
